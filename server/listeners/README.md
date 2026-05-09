@@ -16,3 +16,4 @@ This file is supposed to be modified to include a custom key cert pair for:
     1. server
     2. client
     3. ca.crt file (no key pair)
+TODO: add a checker for devices in the CN list

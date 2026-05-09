@@ -1,3 +1,2 @@
-import std/openssl/x509
+import openssl
 
-x509_new()

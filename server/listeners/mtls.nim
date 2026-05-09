@@ -1,4 +1,8 @@
-import openssl
+import openssl, net, posix
+
+#------- Global file variables -----#
+#create a new context 
+let context = SSL_CTX_new(TLS_server_method())
 
 proc find_print_err()=
     var err = ERR_get_error()
@@ -7,10 +11,7 @@ proc find_print_err()=
     if err != 0:
         echo "[-] ERROR: ", ERR_error_string(err, nil)
 
-proc new_context()=
-    #create a new context and everything required
-    let context = SSL_CTX_new(TLS_server_method())
-
+proc load_verify_files(context: SSL_CTX)=
     # pass in the server file to use on the server side
     var crt_check = SSL_CTX_use_certificate_file(context, "server.crt", SSL_FILETYPE_PEM)
     if crt_check != 1:
@@ -26,6 +27,7 @@ proc new_context()=
 
     SSL_CTX_set_verify(context, SSL_VERIFY_PEER, nil)
 
+proc new_context(fd: SocketHandle, context: SSL_CTX)=
     let ssl = SSL_new(context) 
     if ssl == nil:
         echo "[-] unable to create ssl"
@@ -40,3 +42,4 @@ proc new_context()=
         find_print_err()
     #inspect peer cert and creds
     discard SSL_get_peer_certificate(ssl)
+   

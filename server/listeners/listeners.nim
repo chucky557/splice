@@ -1,6 +1,6 @@
 import std/random
 import strformat
-import openssl, net
+import openssl, net, mtls
 
 type
     Session* = object
