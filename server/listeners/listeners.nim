@@ -23,8 +23,4 @@ proc new_session_id*(session: var Session) =
             session.session_id.add chars.sample()
         echo session.session_id
     except Exception as rand_error:
-        echo fmt"[-]Failed to generate session id: {rand_error.msg}"
-
-
-
-
+        echo fmt"[-] Failed to generate session id: {rand_error.msg}"
